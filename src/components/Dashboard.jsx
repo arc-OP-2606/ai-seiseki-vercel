@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import ScoreCards from './ScoreCards';
 import RadarChart from './RadarChart';
+import BarChart from './BarChart';
 import TrendChart from './TrendChart';
 import AnalysisPanel from './AnalysisPanel';
 import AiPanel from './AiPanel';
@@ -49,11 +50,19 @@ export default function Dashboard({ data, studentKey, onLogout }) {
       <div className="dashboard-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 350px', gap: '20px', marginTop: '20px' }}>
         <div className="dashboard-main" style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           
-          {/* 5科バランス */}
+          {/* 5科バランス と 得点分析 */}
           <section className="card glass">
-            <div className="card-header"><h3>🕸️ 5科バランス</h3></div>
-            <div className="card-body">
-              <RadarChart data={data} currentTest={currentTest} />
+            <div className="card-header"><h3>🕸️ 5科バランス と 得点分析</h3></div>
+            <div className="card-body" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '30px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', minHeight: '380px' }}>
+                <RadarChart data={data} currentTest={currentTest} />
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <h4 style={{ margin: '0 0 15px 0', fontSize: '14px', color: '#cbd5e1', display: 'flex', alignItems: 'center', gap: '6px', fontWeight: 'bold' }}>
+                  <span>📊</span> 科目別得点分析 (教室平均比較)
+                </h4>
+                <BarChart data={data} currentTest={currentTest} />
+              </div>
             </div>
           </section>
 
