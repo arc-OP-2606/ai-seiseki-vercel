@@ -19,10 +19,17 @@ export default function Admin({ onBack }) {
         setError(json.error);
         setKeys(null);
       } else {
-        setKeys(json.data);
+        const keysList = Array.isArray(json) ? json : (json.keys || json.data || []);
+        if (keysList.length === 0) {
+          setError('生徒アクセスキーのデータが見つからないか、パスワードが正しくありません。');
+          setKeys(null);
+        } else {
+          setKeys(keysList);
+        }
       }
     } catch (err) {
-      setError('通信エラーが発生しました。');
+      setError('通信エラーが発生しました。接続状況を確認してください。');
+      console.error('Login Error:', err);
     } finally {
       setLoading(false);
     }
